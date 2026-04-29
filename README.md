@@ -1,23 +1,28 @@
-# Energy Fragility Webapp
+# Energy Shift Map Simulator
 
-Webapp statica che visualizza i punti di fragilita energetica descritti nell'articolo:
+Webapp statica che mostra, su una mappa reale OpenStreetMap, come si riorganizzano
+i flussi energetici, logistici e minerari quando uno dei nodi critici entra in crisi.
 
-- chokepoint marittimi: Hormuz, Suez/Bab el-Mandeb, Malacca, Mar Cinese Meridionale/Taiwan
-- hub industriali e minerari: Cina, Indonesia, Repubblica Democratica del Congo
+## Nodi simulati
 
-## Apertura rapida
+- Hormuz
+- Suez / Bab el-Mandeb
+- Malacca
+- Mar Cinese Meridionale / Taiwan
+- Hub cinese di raffinazione e batterie
+- Indonesia
+- Repubblica Democratica del Congo
 
-Apri `index.html` in un browser moderno.
+## Esperienza
 
-## Cosa mostra
+- una sola vista full-screen centrata sulla mappa
+- layer geografico reale con Leaflet + OpenStreetMap
+- scenari attivabili con pulsanti
+- overlay con scenario attivo, stato del sistema e conteggio delle rotte deviate
+- diagnostica visibile se il layer mappa non si inizializza correttamente
 
-- planisfero stilizzato con flussi energetici, logistici e clean-tech
-- pulsazione dei nodi strategici e animazione dei flussi
-- bottoni per simulare crisi locali
-- metriche sintetiche che mostrano come prezzi, tempi e supply chain si riorganizzano
+## File principali
 
-## Struttura
-
-- `index.html`: layout e pannelli informativi
-- `styles.css`: design, mappa e animazioni
-- `app.js`: dataset, logica di scenario e rendering SVG
+- `index.html`: struttura della pagina e inclusione del layer mappa
+- `styles.css`: layout, overlay, stile della mappa e responsive behavior
+- `app.js`: dataset dei nodi, scenari di crisi e rendering dei flussi
