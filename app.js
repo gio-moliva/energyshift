@@ -567,6 +567,8 @@ function mergeFlows(scenario) {
 }
 
 function ensureMap() {
+  mapStatusElement.textContent = "Inizializzazione layer...";
+
   if (typeof window.L === "undefined") {
     mapStatusElement.textContent = "Leaflet / OSM non disponibile";
     mapElement.innerHTML =
@@ -574,52 +576,62 @@ function ensureMap() {
     return false;
   }
 
-  map = L.map("world-map", {
-    zoomControl: false,
-    worldCopyJump: true,
-    maxBounds: [
-      [-70, -180],
-      [85, 180],
-    ],
-  });
+  try {
+    map = L.map("world-map", {
+      zoomControl: false,
+      worldCopyJump: true,
+      maxBounds: [
+        [-70, -180],
+        [85, 180],
+      ],
+    });
 
-  map.fitBounds(worldBounds, { padding: [24, 24] });
-  map.attributionControl.setPrefix(false);
-  L.control.zoom({ position: "bottomright" }).addTo(map);
+    map.fitBounds(worldBounds, { padding: [24, 24] });
+    map.attributionControl.setPrefix(false);
+    L.control.zoom({ position: "bottomright" }).addTo(map);
 
-  const tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "&copy; OpenStreetMap contributors",
-    minZoom: 2,
-    maxZoom: 6,
-  });
+    const tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+      minZoom: 2,
+      maxZoom: 6,
+    });
 
-  tileLayer.on("load", () => {
-    mapStatusElement.textContent = "OpenStreetMap attivo";
-  });
+    tileLayer.on("load", () => {
+      mapStatusElement.textContent = "OpenStreetMap attivo";
+    });
 
-  tileLayer.on("tileerror", () => {
-    mapStatusElement.textContent = "OpenStreetMap non raggiungibile";
-  });
+    tileLayer.on("tileerror", () => {
+      mapStatusElement.textContent = "OpenStreetMap non raggiungibile";
+    });
 
-  tileLayer.addTo(map);
+    tileLayer.addTo(map);
 
-  flowLayer = L.layerGroup().addTo(map);
-  nodeLayer = L.layerGroup().addTo(map);
+    flowLayer = L.layerGroup().addTo(map);
+    nodeLayer = L.layerGroup().addTo(map);
 
-  window.setTimeout(() => {
-    map.invalidateSize();
-  }, 0);
+    window.setTimeout(() => {
+      map.invalidateSize();
+    }, 50);
 
-  return true;
+    return true;
+  } catch (error) {
+    mapStatusElement.textContent = "Errore inizializzazione mappa";
+    mapElement.innerHTML = `<div class="map-error">La mappa non e stata inizializzata correttamente.<br />${error.message}</div>`;
+    return false;
+  }
 }
 
 function renderFlows(scenario) {
+  const flows = mergeFlows(scenario);
+
+  flowCountElement.textContent = String(flows.length);
+  rerouteCountElement.textContent = String(flows.filter((flow) => flow.rerouted).length);
+
   if (!flowLayer) {
     return;
   }
 
   flowLayer.clearLayers();
-  const flows = mergeFlows(scenario);
 
   flows.forEach((flow) => {
     const color = commodityColor(flow.commodity);
@@ -648,9 +660,6 @@ function renderFlows(scenario) {
       className: "flow-tooltip",
     });
   });
-
-  flowCountElement.textContent = String(flows.length);
-  rerouteCountElement.textContent = String(flows.filter((flow) => flow.rerouted).length);
 }
 
 function nodeIcon(node, isActive) {
@@ -734,7 +743,8 @@ function init() {
   applyScenario("baseline");
 
   if (ready) {
-    map.on("resize", () => {
+    map.whenReady(() => {
+      applyScenario("baseline");
       map.invalidateSize();
     });
   }
