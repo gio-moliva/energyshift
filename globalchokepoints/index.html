@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flussi marittimi e chokepoint globali</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="map-panel">
+        <header class="map-header">
+          <div class="title-block">
+            <p class="eyebrow">Simulatore interattivo</p>
+            <h1>Flussi marittimi e colli di bottiglia globali</h1>
+            <p class="subtitle">
+              Attiva una crisi per vedere come i flussi si comprimono, si
+              deviano o si riallocano sul planisfero reale.
+            </p>
+          </div>
+
+          <div class="live-cluster">
+            <div class="status-row">
+              <span class="live-label">Layer cartografico</span>
+              <strong id="map-status">Inizializzazione layer...</strong>
+            </div>
+            <div class="status-row">
+              <span class="live-label">Simulazione live</span>
+              <strong id="sim-clock">00:00:00 UTC</strong>
+            </div>
+          </div>
+        </header>
+
+        <div class="controls-bar">
+          <div class="legend">
+            <span><i class="swatch oil"></i>Petrolio</span>
+            <span><i class="swatch gas"></i>GNL</span>
+            <span><i class="swatch containers"></i>Container e industria</span>
+            <span><i class="swatch minerals"></i>Minerali e clean tech</span>
+            <span><i class="swatch rerouted"></i>Rotte deviate</span>
+          </div>
+          <div class="scenario-strip" id="scenario-buttons"></div>
+        </div>
+
+        <div class="map-stage">
+          <div
+            id="world-map"
+            class="world-map"
+            role="img"
+            aria-label="Mappa mondiale interattiva con flussi energetici, logistici e minerari"
+          ></div>
+
+          <aside class="floating-card scenario-card">
+            <div class="card-head">
+              <p class="card-kicker">Scenario attivo</p>
+              <span class="status-pill" id="system-status">Sistema aperto</span>
+            </div>
+            <h2 id="scenario-title">Normalita vigilata</h2>
+            <p id="scenario-description">
+              I principali choke point sono aperti e i flussi seguono le rotte
+              piu efficienti.
+            </p>
+            <div class="impact-block">
+              <span class="impact-label">Riorganizzazione dei flussi</span>
+              <p id="scenario-impact">
+                Le deviazioni sono minime: il sistema resta esposto, ma non sta
+                ancora reagendo a uno shock locale.
+              </p>
+            </div>
+          </aside>
+
+          <aside class="floating-card stats-card">
+            <div class="stat-row">
+              <span>Flussi visibili</span>
+              <strong id="flow-count">0</strong>
+            </div>
+            <div class="stat-row">
+              <span>Rotte deviate</span>
+              <strong id="reroute-count">0</strong>
+            </div>
+            <div class="stat-row">
+              <span>Nodo piu stressato</span>
+              <strong id="stress-node">Hormuz</strong>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
