@@ -28,7 +28,16 @@
           <div class="tool-button">17 aprile 2026</div>
           <button class="energy-toggle" id="energy-toggle" type="button" aria-pressed="false">
             <span class="toggle-copy">Risparmia energia</span>
-            <span class="toggle-track" aria-hidden="true"><span class="toggle-thumb"></span></span>
+            <span class="toggle-track" aria-hidden="true">
+              <svg class="toggle-icon sun-icon" viewBox="0 0 24 24" focusable="false">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v3M12 19v3M4.9 4.9 7 7M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"></path>
+              </svg>
+              <svg class="toggle-icon moon-icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 14.2A7.5 7.5 0 0 1 9.8 4a8.6 8.6 0 1 0 10.2 10.2Z"></path>
+              </svg>
+              <span class="toggle-thumb"></span>
+            </span>
           </button>
         </div>
       </header>
@@ -58,7 +67,7 @@
               <i></i>
               <span>bassi</span>
             </div>
-            <div id="price-map" class="price-map" aria-label="Mappa prezzi day-ahead Europa"></div>
+            <div id="price-map" class="price-map" aria-label="Mappa navigabile dei prezzi day-ahead Europa"></div>
           </div>
         </article>
 
