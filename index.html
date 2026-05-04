@@ -10,6 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -34,30 +38,23 @@
             Forte produzione solare e domanda debole portano a prezzi negativi prolungati. Il divario con l'Italia si amplia,
             mentre cresce il valore di storage, flessibilita e interconnessioni.
           </p>
-          <div class="tag-row" id="hero-tags"></div>
-          <div class="impact-strip" id="implications"></div>
+          <a class="read-link" href="https://www.energy-charts.info/charts/price_average_map/chart.htm?l=it&c=EU" target="_blank" rel="noopener noreferrer">Leggi il segnale di mercato →</a>
         </article>
 
         <article class="card map-card">
           <div class="section-head inline">
             <div>
               <p>Prezzi medi day-ahead</p>
-              <span>Settimana 19 · EUR/MWh · scala Energy Shift</span>
+              <span>Settimana 19 · EUR/MWh · mappa dimostrativa</span>
             </div>
           </div>
           <div class="map-layout">
             <div class="legend-scale" aria-label="Legenda prezzi">
-              <span>45</span>
+              <span>bassi</span>
               <i></i>
-              <span>80</span>
-              <i></i>
-              <span>110</span>
-              <i></i>
-              <span>135</span>
+              <span>alti</span>
             </div>
-            <svg class="europe-map" viewBox="0 0 520 430" role="img" aria-label="Mappa dimostrativa dei prezzi day-ahead europei">
-              <g id="price-map"></g>
-            </svg>
+            <div id="price-map" class="price-map" aria-label="Mappa prezzi day-ahead Europa"></div>
           </div>
         </article>
 
@@ -83,6 +80,7 @@
       </section>
     </main>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
