@@ -19,9 +19,7 @@
           <span>Energy</span>
           <strong>Shift</strong>
         </a>
-        <div class="view-switch">
-          Briefing giornaliero
-        </div>
+        <div class="view-switch">Energy Transition News Cockpit</div>
         <div class="toolbar" aria-label="Contesto briefing">
           <div class="tool-button" aria-label="Data briefing">
             <span aria-hidden="true">□</span>
@@ -32,20 +30,16 @@
             Europa
           </div>
         </div>
-        <label class="search">
-          <span aria-hidden="true">⌕</span>
-          <input type="search" placeholder="Cerca notizie, fonti, paesi..." />
-        </label>
       </header>
 
       <section class="hero-grid" aria-label="Panoramica del giorno">
         <article class="lead-card">
           <div class="lead-copy">
-            <p class="eyebrow">Panoramica del giorno</p>
+            <p class="eyebrow">Vetrina prodotto</p>
             <h1>Prezzi negativi in Germania: il solare spinge il mercato <span>sotto zero</span></h1>
             <p>
-              Forte produzione solare e domanda debole portano a prezzi negativi prolungati in Germania.
-              Il divario con l'Italia si amplia, mentre i mercati guardano a flessibilita e storage.
+              Una preview del cockpit Energy Shift per leggere insieme prezzi elettrici, notizie flash,
+              fonti e implicazioni per mercati, policy, infrastrutture e aziende.
             </p>
             <div class="tag-row" id="hero-tags"></div>
           </div>
@@ -82,18 +76,18 @@
         <div class="section-head inline">
           <div>
             <p id="prices-title">Prezzi elettricita day-ahead</p>
-            <span>€/MWh · Energy Charts API</span>
+            <span>€/MWh · dati dimostrativi su layout Energy Charts API</span>
           </div>
         </div>
         <div class="price-grid" id="price-grid"></div>
       </section>
 
-      <section class="content-grid">
+      <section class="content-grid showcase-grid">
         <article class="card flash-card">
           <div class="section-head inline">
             <div>
               <p>Notizie flash</p>
-              <span>Feed RSS/API gratuiti · aggiornamento ogni ora</span>
+              <span>Esempio di feed intelligence per monitoraggio quotidiano</span>
             </div>
           </div>
           <div class="flash-list" id="flash-list"></div>
@@ -103,7 +97,7 @@
           <div class="section-head inline">
             <div>
               <p>Scelte Energy Shift</p>
-              <span>Selezione settimanale curata con Codex</span>
+              <span>Selezione settimanale ad alta rilevanza editoriale</span>
             </div>
           </div>
           <div class="editorial-list" id="editorial-list"></div>
@@ -117,16 +111,6 @@
             </div>
           </div>
           <div id="market-signals"></div>
-        </article>
-
-        <article class="card db-card">
-          <div class="section-head inline">
-            <div>
-              <p>Database Convex</p>
-              <span>Struttura dati pronta per fonti, articoli, briefing e prezzi</span>
-            </div>
-          </div>
-          <div class="schema-grid" id="schema-grid"></div>
         </article>
       </section>
     </main>
