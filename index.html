@@ -15,34 +15,27 @@
   <body>
     <main class="cockpit-shell">
       <header class="topbar" aria-label="Navigazione principale">
-        <a class="brand" href="#" aria-label="Energy Shift home">
+        <a class="brand" href="https://energyshift.it" aria-label="Energy Shift home">
           <span>Energy</span>
           <strong>Shift</strong>
         </a>
-        <button class="view-switch" type="button">
+        <div class="view-switch">
           Briefing giornaliero
-          <span aria-hidden="true">⌄</span>
-        </button>
-        <div class="toolbar">
-          <button class="tool-button" type="button" aria-label="Seleziona data">
+        </div>
+        <div class="toolbar" aria-label="Contesto briefing">
+          <div class="tool-button" aria-label="Data briefing">
             <span aria-hidden="true">□</span>
             4 maggio 2026
-          </button>
-          <button class="tool-button" type="button" aria-label="Area geografica">
+          </div>
+          <div class="tool-button" aria-label="Area geografica">
             <span aria-hidden="true">◎</span>
             Europa
-          </button>
+          </div>
         </div>
         <label class="search">
           <span aria-hidden="true">⌕</span>
           <input type="search" placeholder="Cerca notizie, fonti, paesi..." />
-          <kbd>⌘ K</kbd>
         </label>
-        <div class="actions-top">
-          <button class="icon-button" type="button">Salvati</button>
-          <button class="icon-button" type="button">Esporta</button>
-          <button class="avatar" type="button" aria-label="Profilo">MG</button>
-        </div>
       </header>
 
       <section class="hero-grid" aria-label="Panoramica del giorno">
@@ -79,10 +72,9 @@
         <aside class="source-card">
           <div class="section-head with-count">
             <p>Fonti</p>
-            <span>7</span>
+            <span>5</span>
           </div>
           <div id="sources"></div>
-          <a class="link-action" href="#">Vedi tutte le fonti →</a>
         </aside>
       </section>
 
@@ -92,7 +84,6 @@
             <p id="prices-title">Prezzi elettricita day-ahead</p>
             <span>€/MWh · Energy Charts API</span>
           </div>
-          <a href="#" class="link-action">Vedi mappa ●</a>
         </div>
         <div class="price-grid" id="price-grid"></div>
       </section>
@@ -104,7 +95,6 @@
               <p>Notizie flash</p>
               <span>Feed RSS/API gratuiti · aggiornamento ogni ora</span>
             </div>
-            <button class="small-button" type="button">Gestisci feed</button>
           </div>
           <div class="flash-list" id="flash-list"></div>
         </article>
@@ -115,7 +105,6 @@
               <p>Scelte Energy Shift</p>
               <span>Selezione settimanale curata con Codex</span>
             </div>
-            <button class="small-button primary" type="button">Apri workspace</button>
           </div>
           <div class="editorial-list" id="editorial-list"></div>
         </article>
@@ -129,15 +118,6 @@
           </div>
           <div id="market-signals"></div>
         </article>
-
-        <aside class="card ops-card">
-          <div class="section-head">
-            <p>Azioni</p>
-          </div>
-          <button type="button">Copia briefing</button>
-          <button type="button">Esporta PDF</button>
-          <button type="button">Condividi</button>
-        </aside>
 
         <article class="card db-card">
           <div class="section-head inline">
