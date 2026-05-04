@@ -73,6 +73,7 @@ function initEnergySavingMode() {
   const toggle = document.getElementById("energy-toggle");
   if (!toggle) return;
 
+  const toggleCopy = toggle.querySelector(".toggle-copy");
   const savedPreference = localStorage.getItem("energyshift-energy-saving");
   const enabled = savedPreference === "on";
 
@@ -81,8 +82,11 @@ function initEnergySavingMode() {
     toggle.setAttribute("aria-pressed", String(isEnabled));
     toggle.setAttribute(
       "aria-label",
-      isEnabled ? "Disattiva Risparmia energia" : "Attiva Risparmia energia"
+      isEnabled ? "Disattiva risparmio energetico" : "Attiva risparmio energetico"
     );
+    if (toggleCopy) {
+      toggleCopy.textContent = isEnabled ? "Risparmio attivo" : "Risparmia energia";
+    }
     localStorage.setItem("energyshift-energy-saving", isEnabled ? "on" : "off");
   }
 
