@@ -1,14 +1,14 @@
 const pricePoints = [
-  { code: "NO", name: "Nordici", value: 48.7, coords: [61.5, 10.5] },
-  { code: "DK", name: "Danimarca", value: 76.1, coords: [56.1, 10.0] },
-  { code: "DE", name: "Germania", value: 129.9, coords: [51.1, 10.4] },
-  { code: "FR", name: "Francia", value: 101.7, coords: [46.4, 2.2] },
-  { code: "ES", name: "Spagna", value: 68.0, coords: [40.2, -3.7] },
-  { code: "IT", name: "Italia", value: 134.3, coords: [42.8, 12.5] },
-  { code: "PL", name: "Polonia", value: 117.3, coords: [52.0, 19.1] },
-  { code: "RO", name: "Romania", value: 112.0, coords: [45.9, 24.9] },
-  { code: "GR", name: "Grecia", value: 100.5, coords: [39.0, 22.0] },
-  { code: "NL", name: "Paesi Bassi", value: 116.9, coords: [52.1, 5.3] },
+  { code: "NO", names: ["Norway", "Norvegia"], value: 48.7, coords: [61.5, 10.5] },
+  { code: "DK", names: ["Denmark", "Danimarca"], value: 76.1, coords: [56.1, 10.0] },
+  { code: "DE", names: ["Germany", "Germania"], value: 129.9, coords: [51.1, 10.4] },
+  { code: "FR", names: ["France", "Francia"], value: 101.7, coords: [46.4, 2.2] },
+  { code: "ES", names: ["Spain", "Spagna"], value: 68.0, coords: [40.2, -3.7] },
+  { code: "IT", names: ["Italy", "Italia"], value: 134.3, coords: [42.8, 12.5] },
+  { code: "PL", names: ["Poland", "Polonia"], value: 117.3, coords: [52.0, 19.1] },
+  { code: "RO", names: ["Romania"], value: 112.0, coords: [45.9, 24.9] },
+  { code: "GR", names: ["Greece", "Grecia"], value: 100.5, coords: [39.0, 22.0] },
+  { code: "NL", names: ["Netherlands", "Paesi Bassi"], value: 116.9, coords: [52.1, 5.3] },
 ];
 
 const flashNews = [
@@ -74,14 +74,52 @@ function formatPrice(value) {
 }
 
 function priceColor(value) {
-  if (value < 70) return "#063f99";
-  if (value < 95) return "#0a5bd3";
+  if (value < 70) return "#e6f0ff";
+  if (value < 95) return "#9dc4ff";
   if (value < 115) return "#4f8fea";
-  if (value < 128) return "#9dc4ff";
+  if (value < 128) return "#0a5bd3";
   return "#052f73";
 }
 
-function initPriceMap() {
+function getFeatureName(feature) {
+  const props = feature.properties || {};
+  return String(props.NAME || props.name || props.NAME_ENGL || props.ADMIN || props.sovereignt || "");
+}
+
+function findPricePoint(feature) {
+  const featureName = getFeatureName(feature).toLowerCase();
+  return pricePoints.find((point) => point.names.some((name) => featureName.includes(name.toLowerCase())));
+}
+
+function renderPointLabels(map) {
+  pricePoints.forEach((point) => {
+    L.marker(point.coords, {
+      interactive: false,
+      icon: L.divIcon({
+        className: "country-price-label",
+        html: `<span>${point.code}</span><strong>${formatPrice(point.value)}</strong>`,
+        iconSize: [58, 38],
+        iconAnchor: [29, 19],
+      }),
+    }).addTo(map);
+  });
+}
+
+function renderFallbackMarkers(map) {
+  pricePoints.forEach((point) => {
+    L.circleMarker(point.coords, {
+      radius: 18,
+      color: "#ffffff",
+      weight: 3,
+      fillColor: priceColor(point.value),
+      fillOpacity: 0.94,
+      interactive: false,
+    }).addTo(map);
+  });
+  renderPointLabels(map);
+}
+
+async function initPriceMap() {
   const element = document.getElementById("price-map");
   if (!element || typeof L === "undefined") return;
 
@@ -100,23 +138,28 @@ function initPriceMap() {
     maxZoom: 7,
   }).addTo(map);
 
-  pricePoints.forEach((point) => {
-    const marker = L.circleMarker(point.coords, {
-      radius: 18,
-      color: "#ffffff",
-      weight: 3,
-      fillColor: priceColor(point.value),
-      fillOpacity: 0.94,
+  try {
+    const response = await fetch("https://cdn.jsdelivr.net/gh/leakyMirror/map-of-europe@master/GeoJSON/europe.geojson");
+    if (!response.ok) throw new Error("GeoJSON non disponibile");
+    const geojson = await response.json();
+
+    L.geoJSON(geojson, {
+      style: (feature) => {
+        const point = findPricePoint(feature);
+        return {
+          color: point ? "#ffffff" : "#d9e4f3",
+          weight: point ? 1.6 : 0.8,
+          fillColor: point ? priceColor(point.value) : "#f4f8fd",
+          fillOpacity: point ? 0.88 : 0.44,
+        };
+      },
       interactive: false,
     }).addTo(map);
 
-    marker.bindTooltip(`${point.code} ${formatPrice(point.value)}`, {
-      permanent: true,
-      direction: "center",
-      className: "price-label",
-      opacity: 1,
-    });
-  });
+    renderPointLabels(map);
+  } catch (error) {
+    renderFallbackMarkers(map);
+  }
 }
 
 function renderFlash() {
