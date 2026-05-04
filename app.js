@@ -8,11 +8,11 @@ const implications = [
 ];
 
 const sources = [
-  ["EC", "EU storage flexibility rules consultation launched", "Commissione europea · 2 h fa"],
-  ["EN", "ENTSO-E maintenance notice on Baltic interconnector", "ENTSO-E · 2 h fa"],
-  ["RN", "Italy storage auction attracts record interest", "Renewables Now · 3 h fa"],
-  ["SP", "LNG demand slips in Northwest Europe", "S&P Global Energy · 4 h fa"],
-  ["EG", "German grid plan 2026-2030 published", "Bundesnetzagentur · 5 h fa"],
+  ["EC", "EU storage flexibility rules consultation launched", "Commissione europea · 2 h fa", "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en"],
+  ["EN", "ENTSO-E Transparency Platform", "ENTSO-E · dati e comunicazioni", "https://transparency.entsoe.eu/"],
+  ["RN", "Italy storage auction attracts record interest", "Renewables Now · news", "https://renewablesnow.com/"],
+  ["SP", "LNG demand slips in Northwest Europe", "S&P Global Energy · news", "https://www.spglobal.com/commodity-insights/en/news-research"],
+  ["EG", "German grid plan 2026-2030 published", "Bundesnetzagentur · rete", "https://www.bundesnetzagentur.de/"],
 ];
 
 const prices = [
@@ -59,13 +59,13 @@ function renderTags() {
 
 function renderImplications() {
   document.getElementById("implications").innerHTML = implications.map(([icon, title, copy]) => `
-    <div class="implication"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div><span>›</span></div>
+    <div class="implication"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div></div>
   `).join("");
 }
 
 function renderSources() {
-  document.getElementById("sources").innerHTML = sources.map(([icon, title, meta]) => `
-    <div class="source-item"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="meta">${meta}</p></div><span>↗</span></div>
+  document.getElementById("sources").innerHTML = sources.map(([icon, title, meta, url]) => `
+    <a class="source-item source-link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="meta">${meta}</p></div><span>↗</span></a>
   `).join("");
 }
 
@@ -104,7 +104,7 @@ function renderEditorial() {
 
 function renderSignals() {
   document.getElementById("market-signals").innerHTML = signals.map(([icon, title, copy]) => `
-    <div class="signal-item"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div><span>↗</span></div>
+    <div class="signal-item"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div></div>
   `).join("");
 }
 
