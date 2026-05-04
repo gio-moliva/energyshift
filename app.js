@@ -69,6 +69,29 @@ const editorialPicks = [
   },
 ];
 
+function initEnergySavingMode() {
+  const toggle = document.getElementById("energy-toggle");
+  if (!toggle) return;
+
+  const savedPreference = localStorage.getItem("energyshift-energy-saving");
+  const enabled = savedPreference === "on";
+
+  function applyEnergySaving(isEnabled) {
+    document.body.classList.toggle("energy-saving", isEnabled);
+    toggle.setAttribute("aria-pressed", String(isEnabled));
+    toggle.setAttribute(
+      "aria-label",
+      isEnabled ? "Disattiva Risparmia energia" : "Attiva Risparmia energia"
+    );
+    localStorage.setItem("energyshift-energy-saving", isEnabled ? "on" : "off");
+  }
+
+  applyEnergySaving(enabled);
+  toggle.addEventListener("click", () => {
+    applyEnergySaving(!document.body.classList.contains("energy-saving"));
+  });
+}
+
 function formatPrice(value) {
   return value.toFixed(1).replace(".", ",");
 }
@@ -174,6 +197,7 @@ function renderEditorial() {
   `).join("");
 }
 
+initEnergySavingMode();
 initPriceMap();
 renderFlash();
 renderEditorial();
