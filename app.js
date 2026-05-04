@@ -1,73 +1,136 @@
-const heroTags = ["Mercati", "Storage", "Rete"];
-
-const implications = [
-  ["Mercati", "Spread regionali in aumento"],
-  ["Storage", "Valore maggiore nelle ore centrali"],
-  ["Rete", "Congestioni e interconnessioni decisive"],
-];
-
-const mapZones = [
-  ["Nordics", "Nordici", 48.7, "low", "M210 52 L250 82 L242 132 L204 152 L172 126 L180 78 Z", 218, 105],
-  ["GB", "UK", 116.9, "mid", "M72 170 L118 150 L142 190 L112 230 L68 215 Z", 103, 190],
-  ["FR", "FR", 101.7, "midlow", "M156 238 L220 224 L256 270 L228 334 L156 326 L126 282 Z", 190, 282],
-  ["DE", "DE", 129.9, "high", "M238 192 L286 184 L314 230 L296 282 L244 278 L218 228 Z", 266, 236],
-  ["ES", "ES", 68.0, "low", "M92 330 L170 324 L190 378 L134 402 L74 376 Z", 132, 365],
-  ["IT", "IT", 134.3, "highest", "M298 298 L334 314 L354 374 L338 404 L306 350 L282 326 Z", 322, 350],
-  ["PL", "PL", 117.3, "midhigh", "M312 198 L370 206 L386 258 L334 284 L298 250 Z", 342, 240],
-  ["BAL", "Baltici", 93.6, "midlow", "M350 122 L392 130 L402 184 L360 186 L338 154 Z", 370, 158],
-  ["RO", "RO", 112.0, "midhigh", "M366 296 L428 300 L450 340 L404 366 L352 336 Z", 402, 330],
-  ["GR", "GR", 100.5, "midlow", "M368 370 L424 370 L438 410 L386 416 Z", 404, 394],
-  ["CH", "CH", 124.8, "high", "M244 286 L286 282 L302 310 L260 326 L232 306 Z", 266, 304],
+const pricePoints = [
+  { code: "NO", name: "Nordici", value: 48.7, coords: [61.5, 10.5] },
+  { code: "DK", name: "Danimarca", value: 76.1, coords: [56.1, 10.0] },
+  { code: "DE", name: "Germania", value: 129.9, coords: [51.1, 10.4] },
+  { code: "FR", name: "Francia", value: 101.7, coords: [46.4, 2.2] },
+  { code: "ES", name: "Spagna", value: 68.0, coords: [40.2, -3.7] },
+  { code: "IT", name: "Italia", value: 134.3, coords: [42.8, 12.5] },
+  { code: "PL", name: "Polonia", value: 117.3, coords: [52.0, 19.1] },
+  { code: "RO", name: "Romania", value: 112.0, coords: [45.9, 24.9] },
+  { code: "GR", name: "Grecia", value: 100.5, coords: [39.0, 22.0] },
+  { code: "NL", name: "Paesi Bassi", value: 116.9, coords: [52.1, 5.3] },
 ];
 
 const flashNews = [
-  { topic: "Prezzi", title: "Germania sotto zero per 6 ore consecutive", source: "Energy Charts", implication: "Segnale favorevole per batterie e demand response.", score: 96 },
-  { topic: "Policy", title: "UE rafforza reporting e trasparenza REMIT", source: "Commissione europea", implication: "Nuovi obblighi dati per mercati wholesale.", score: 91 },
-  { topic: "Rete", title: "Interconnessioni sotto osservazione nel Baltico", source: "ENTSO-E", implication: "Possibile aumento degli spread serali.", score: 84 },
-  { topic: "LNG", title: "Domanda LNG in calo nel Nord-Ovest Europa", source: "S&P Global Energy", implication: "Pressione su TTF e gas-to-power.", score: 79 },
+  {
+    topic: "Prezzi",
+    title: "Germania sotto zero per 6 ore consecutive",
+    source: "Energy Charts",
+    implication: "Segnale favorevole per batterie e demand response.",
+    url: "https://www.energy-charts.info/charts/price_average_map/chart.htm?l=it&c=EU",
+  },
+  {
+    topic: "Policy",
+    title: "UE rafforza reporting e trasparenza REMIT",
+    source: "Commissione europea",
+    implication: "Nuovi obblighi dati per mercati wholesale.",
+    url: "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en",
+  },
+  {
+    topic: "Rete",
+    title: "Interconnessioni sotto osservazione nel Baltico",
+    source: "ENTSO-E",
+    implication: "Possibile aumento degli spread serali.",
+    url: "https://transparency.entsoe.eu/",
+  },
+  {
+    topic: "LNG",
+    title: "Domanda LNG in calo nel Nord-Ovest Europa",
+    source: "S&P Global Energy",
+    implication: "Pressione su TTF e gas-to-power.",
+    url: "https://www.spglobal.com/commodity-insights/en/news-research",
+  },
 ];
 
 const editorialPicks = [
-  { title: "Le rinnovabili superano il carbone nella generazione elettrica globale", copy: "Il passaggio e simbolico e industriale insieme: solare ed eolico non sono piu laterali, ma centrali.", sources: "Carbon Brief · Ember" },
-  { title: "Batterie: la flessibilita diventa il nuovo terreno competitivo", copy: "La competizione si sposta dalla pura generazione alla capacita di spostare energia nel tempo.", sources: "IEA · BloombergNEF" },
-  { title: "Italia: il solare diventa prima fonte rinnovabile del mese", copy: "La crescita fotovoltaica rende piu urgente coordinare storage, domanda flessibile e reti.", sources: "Terna · pv magazine Italia" },
-  { title: "REMIT: nuove regole UE su integrita e trasparenza", copy: "Piu reporting verso ACER e maggiore sorveglianza dei mercati energetici wholesale.", sources: "Commissione europea · ACER" },
+  {
+    title: "Le rinnovabili superano il carbone nella generazione elettrica globale",
+    copy: "Il passaggio e simbolico e industriale insieme: solare ed eolico non sono piu laterali, ma centrali.",
+    sources: "Carbon Brief · Ember",
+    url: "https://www.carbonbrief.org/clean-energy-pushes-fossil-fuel-power-into-reverse-for-first-time-ever/",
+  },
+  {
+    title: "Batterie: la flessibilita diventa il nuovo terreno competitivo",
+    copy: "La competizione si sposta dalla pura generazione alla capacita di spostare energia nel tempo.",
+    sources: "IEA · BloombergNEF",
+    url: "https://www.iea.org/reports/global-energy-review-2026/technology-battery-storage",
+  },
+  {
+    title: "Italia: il solare diventa prima fonte rinnovabile del mese",
+    copy: "La crescita fotovoltaica rende piu urgente coordinare storage, domanda flessibile e reti.",
+    sources: "Terna · pv magazine Italia",
+    url: "https://www.pv-magazine.it/2026/04/21/a-marzo-prodotti-4-twh-di-elettricita-da-fotovoltaico-prima-fonte-rinnovabile-del-mese/",
+  },
+  {
+    title: "REMIT: nuove regole UE su integrita e trasparenza",
+    copy: "Piu reporting verso ACER e maggiore sorveglianza dei mercati energetici wholesale.",
+    sources: "Commissione europea · ACER",
+    url: "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en",
+  },
 ];
 
-function renderTags() {
-  document.getElementById("hero-tags").innerHTML = heroTags.map((tag) => `<span class="tag">${tag}</span>`).join("");
+function formatPrice(value) {
+  return value.toFixed(1).replace(".", ",");
 }
 
-function renderImplications() {
-  document.getElementById("implications").innerHTML = implications.map(([title, copy]) => `
-    <div class="impact-pill"><strong>${title}</strong><span>${copy}</span></div>
-  `).join("");
+function priceColor(value) {
+  if (value < 70) return "#063f99";
+  if (value < 95) return "#0a5bd3";
+  if (value < 115) return "#4f8fea";
+  if (value < 128) return "#9dc4ff";
+  return "#052f73";
 }
 
-function renderPriceMap() {
-  document.getElementById("price-map").innerHTML = mapZones.map(([id, label, value, level, path, x, y]) => `
-    <g class="map-zone zone-${level}">
-      <path d="${path}" />
-      <text x="${x}" y="${y}">${String(value).replace(".", ",")}</text>
-      <text class="zone-label" x="${x}" y="${y + 18}">${label}</text>
-    </g>
-  `).join("");
+function initPriceMap() {
+  const element = document.getElementById("price-map");
+  if (!element || typeof L === "undefined") return;
+
+  const map = L.map(element, {
+    zoomControl: false,
+    attributionControl: false,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    tap: false,
+  }).setView([51.2, 11.5], 4);
+
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
+    maxZoom: 7,
+  }).addTo(map);
+
+  pricePoints.forEach((point) => {
+    const marker = L.circleMarker(point.coords, {
+      radius: 18,
+      color: "#ffffff",
+      weight: 3,
+      fillColor: priceColor(point.value),
+      fillOpacity: 0.94,
+      interactive: false,
+    }).addTo(map);
+
+    marker.bindTooltip(`${point.code} ${formatPrice(point.value)}`, {
+      permanent: true,
+      direction: "center",
+      className: "price-label",
+      opacity: 1,
+    });
+  });
 }
 
 function renderFlash() {
   document.getElementById("flash-list").innerHTML = flashNews.map((item) => `
-    <article class="flash-item"><span class="flash-topic">${item.topic}</span><div><p class="item-title">${item.title}</p><p class="item-copy">${item.implication}</p><p class="meta">${item.source}</p></div><span class="relevance">${item.score}</span></article>
+    <a class="flash-item news-link" href="${item.url}" target="_blank" rel="noopener noreferrer"><span class="flash-topic">${item.topic}</span><div><p class="item-title">${item.title}</p><p class="item-copy">${item.implication}</p><p class="meta">${item.source}</p></div><span class="open-mark">↗</span></a>
   `).join("");
 }
 
 function renderEditorial() {
   document.getElementById("editorial-list").innerHTML = editorialPicks.map((item) => `
-    <article class="editorial-item"><p class="item-title">${item.title}</p><p class="item-copy">${item.copy}</p><p class="meta">${item.sources}</p></article>
+    <a class="editorial-item news-link" href="${item.url}" target="_blank" rel="noopener noreferrer"><p class="item-title">${item.title}</p><p class="item-copy">${item.copy}</p><p class="meta">${item.sources}</p></a>
   `).join("");
 }
 
-renderTags();
-renderImplications();
-renderPriceMap();
+initPriceMap();
 renderFlash();
 renderEditorial();
