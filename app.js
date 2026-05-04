@@ -142,20 +142,28 @@ function renderFallbackMarkers(map) {
   renderPointLabels(map);
 }
 
+function fitPriceMap(map) {
+  const bounds = L.latLngBounds(pricePoints.map((point) => point.coords));
+  map.fitBounds(bounds, { padding: [52, 52], maxZoom: 4 });
+  map.setMaxBounds([[34, -13], [65.5, 31]]);
+}
+
 async function initPriceMap() {
   const element = document.getElementById("price-map");
   if (!element || typeof L === "undefined") return;
 
   const map = L.map(element, {
-    zoomControl: false,
+    zoomControl: true,
     attributionControl: false,
-    dragging: false,
+    dragging: true,
     scrollWheelZoom: false,
-    doubleClickZoom: false,
+    doubleClickZoom: true,
     boxZoom: false,
-    keyboard: false,
-    tap: false,
-  }).setView([51.2, 11.5], 4);
+    keyboard: true,
+    tap: true,
+    minZoom: 3,
+    maxZoom: 7,
+  }).setView([49.5, 10.5], 4);
 
   L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
     maxZoom: 7,
@@ -183,6 +191,9 @@ async function initPriceMap() {
   } catch (error) {
     renderFallbackMarkers(map);
   }
+
+  fitPriceMap(map);
+  setTimeout(() => map.invalidateSize(), 80);
 }
 
 function renderFlash() {
