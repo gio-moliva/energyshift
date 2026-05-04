@@ -3,101 +3,154 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flussi marittimi e chokepoint globali</title>
+    <title>Energy Shift | Energy Transition News Cockpit</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <section class="map-panel">
-        <header class="map-header">
-          <div class="title-block">
-            <p class="eyebrow">Simulatore interattivo</p>
-            <h1>Flussi marittimi e colli di bottiglia globali</h1>
-            <p class="subtitle">
-              Attiva una crisi per vedere come i flussi si comprimono, si
-              deviano o si riallocano sul planisfero reale.
-            </p>
-          </div>
-
-          <div class="live-cluster">
-            <div class="status-row">
-              <span class="live-label">Layer cartografico</span>
-              <strong id="map-status">Inizializzazione layer...</strong>
-            </div>
-            <div class="status-row">
-              <span class="live-label">Simulazione live</span>
-              <strong id="sim-clock">00:00:00 UTC</strong>
-            </div>
-          </div>
-        </header>
-
-        <div class="controls-bar">
-          <div class="legend">
-            <span><i class="swatch oil"></i>Petrolio</span>
-            <span><i class="swatch gas"></i>GNL</span>
-            <span><i class="swatch containers"></i>Container e industria</span>
-            <span><i class="swatch minerals"></i>Minerali e clean tech</span>
-            <span><i class="swatch rerouted"></i>Rotte deviate</span>
-          </div>
-          <div class="scenario-strip" id="scenario-buttons"></div>
+    <main class="cockpit-shell">
+      <header class="topbar" aria-label="Navigazione principale">
+        <a class="brand" href="#" aria-label="Energy Shift home">
+          <span>Energy</span>
+          <strong>Shift</strong>
+        </a>
+        <button class="view-switch" type="button">
+          Briefing giornaliero
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <div class="toolbar">
+          <button class="tool-button" type="button" aria-label="Seleziona data">
+            <span aria-hidden="true">□</span>
+            4 maggio 2026
+          </button>
+          <button class="tool-button" type="button" aria-label="Area geografica">
+            <span aria-hidden="true">◎</span>
+            Europa
+          </button>
         </div>
-
-        <div class="map-stage">
-          <div
-            id="world-map"
-            class="world-map"
-            role="img"
-            aria-label="Mappa mondiale interattiva con flussi energetici, logistici e minerari"
-          ></div>
-
-          <aside class="floating-card scenario-card">
-            <div class="card-head">
-              <p class="card-kicker">Scenario attivo</p>
-              <span class="status-pill" id="system-status">Sistema aperto</span>
-            </div>
-            <h2 id="scenario-title">Normalita vigilata</h2>
-            <p id="scenario-description">
-              I principali choke point sono aperti e i flussi seguono le rotte
-              piu efficienti.
-            </p>
-            <div class="impact-block">
-              <span class="impact-label">Riorganizzazione dei flussi</span>
-              <p id="scenario-impact">
-                Le deviazioni sono minime: il sistema resta esposto, ma non sta
-                ancora reagendo a uno shock locale.
-              </p>
-            </div>
-          </aside>
-
-          <aside class="floating-card stats-card">
-            <div class="stat-row">
-              <span>Flussi visibili</span>
-              <strong id="flow-count">0</strong>
-            </div>
-            <div class="stat-row">
-              <span>Rotte deviate</span>
-              <strong id="reroute-count">0</strong>
-            </div>
-            <div class="stat-row">
-              <span>Nodo piu stressato</span>
-              <strong id="stress-node">Hormuz</strong>
-            </div>
-          </aside>
+        <label class="search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" placeholder="Cerca notizie, fonti, paesi..." />
+          <kbd>⌘ K</kbd>
+        </label>
+        <div class="actions-top">
+          <button class="icon-button" type="button">Salvati</button>
+          <button class="icon-button" type="button">Esporta</button>
+          <button class="avatar" type="button" aria-label="Profilo">MG</button>
         </div>
+      </header>
+
+      <section class="hero-grid" aria-label="Panoramica del giorno">
+        <article class="lead-card">
+          <div class="lead-copy">
+            <p class="eyebrow">Panoramica del giorno</p>
+            <h1>Prezzi negativi in Germania: il solare spinge il mercato <span>sotto zero</span></h1>
+            <p>
+              Forte produzione solare e domanda debole portano a prezzi negativi prolungati in Germania.
+              Il divario con l'Italia si amplia, mentre i mercati guardano a flessibilita e storage.
+            </p>
+            <div class="tag-row" id="hero-tags"></div>
+          </div>
+          <div class="map-visual" aria-hidden="true">
+            <svg viewBox="0 0 380 250" role="img">
+              <path class="map-line faint" d="M44 170 C95 118 126 111 151 70 C179 26 228 38 253 71 C280 106 308 103 341 63" />
+              <path class="map-line" d="M70 210 C116 164 142 148 164 105 C190 55 232 62 254 94 C282 135 302 128 338 87" />
+              <circle class="map-dot" cx="164" cy="105" r="8" />
+              <circle class="map-dot hollow" cx="254" cy="94" r="7" />
+              <circle class="map-dot" cx="302" cy="128" r="5" />
+              <path class="coast" d="M40 70 C75 48 122 40 163 46 C206 52 234 22 275 37 C313 49 335 77 350 110" />
+              <path class="coast" d="M74 132 C109 117 145 121 183 140 C218 157 249 156 286 145" />
+            </svg>
+          </div>
+        </article>
+
+        <aside class="quick-card">
+          <div class="section-head">
+            <p>Implicazioni rapide</p>
+          </div>
+          <div id="implications"></div>
+        </aside>
+
+        <aside class="source-card">
+          <div class="section-head with-count">
+            <p>Fonti</p>
+            <span>7</span>
+          </div>
+          <div id="sources"></div>
+          <a class="link-action" href="#">Vedi tutte le fonti →</a>
+        </aside>
+      </section>
+
+      <section class="price-band card" aria-labelledby="prices-title">
+        <div class="section-head inline">
+          <div>
+            <p id="prices-title">Prezzi elettricita day-ahead</p>
+            <span>€/MWh · Energy Charts API</span>
+          </div>
+          <a href="#" class="link-action">Vedi mappa ●</a>
+        </div>
+        <div class="price-grid" id="price-grid"></div>
+      </section>
+
+      <section class="content-grid">
+        <article class="card flash-card">
+          <div class="section-head inline">
+            <div>
+              <p>Notizie flash</p>
+              <span>Feed RSS/API gratuiti · aggiornamento ogni ora</span>
+            </div>
+            <button class="small-button" type="button">Gestisci feed</button>
+          </div>
+          <div class="flash-list" id="flash-list"></div>
+        </article>
+
+        <article class="card editorial-card">
+          <div class="section-head inline">
+            <div>
+              <p>Scelte Energy Shift</p>
+              <span>Selezione settimanale curata con Codex</span>
+            </div>
+            <button class="small-button primary" type="button">Apri workspace</button>
+          </div>
+          <div class="editorial-list" id="editorial-list"></div>
+        </article>
+
+        <article class="card market-card">
+          <div class="section-head inline">
+            <div>
+              <p>Segnali di mercato</p>
+              <span>Storage, PPAs, LNG, rete</span>
+            </div>
+          </div>
+          <div id="market-signals"></div>
+        </article>
+
+        <aside class="card ops-card">
+          <div class="section-head">
+            <p>Azioni</p>
+          </div>
+          <button type="button">Copia briefing</button>
+          <button type="button">Esporta PDF</button>
+          <button type="button">Condividi</button>
+        </aside>
+
+        <article class="card db-card">
+          <div class="section-head inline">
+            <div>
+              <p>Database Convex</p>
+              <span>Struttura dati pronta per fonti, articoli, briefing e prezzi</span>
+            </div>
+          </div>
+          <div class="schema-grid" id="schema-grid"></div>
+        </article>
       </section>
     </main>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

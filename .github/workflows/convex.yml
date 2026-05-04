@@ -1,0 +1,31 @@
+name: Deploy Convex
+
+on:
+  push:
+    branches:
+      - codex/news-cockpit-convex
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-convex:
+    name: Deploy Convex backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy Convex
+        run: npx convex deploy
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}

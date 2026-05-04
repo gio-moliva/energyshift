@@ -1,28 +1,37 @@
-# Energy Shift Map Simulator
+# Energy Shift | Energy Transition News Cockpit
 
-Webapp statica che mostra, su una mappa reale OpenStreetMap, come si riorganizzano
-i flussi energetici, logistici e minerari quando uno dei nodi critici entra in crisi.
+Webapp editoriale e analitica per monitorare la transizione energetica europea.
 
-## Nodi simulati
+## Cosa include
 
-- Hormuz
-- Suez / Bab el-Mandeb
-- Malacca
-- Mar Cinese Meridionale / Taiwan
-- Hub cinese di raffinazione e batterie
-- Indonesia
-- Repubblica Democratica del Congo
+- briefing giornaliero in italiano
+- prezzi elettricita day-ahead per principali mercati europei
+- notizie flash da feed RSS/API gratuiti
+- selezione settimanale della redazione Energy Shift
+- fonti e citazioni
+- azioni di export/condivisione
+- modello dati Convex per fonti, articoli, briefing, prezzi e workspace
 
-## Esperienza
+## Frontend statico
 
-- una sola vista full-screen centrata sulla mappa
-- layer geografico reale con Leaflet + OpenStreetMap
-- scenari attivabili con pulsanti
-- overlay con scenario attivo, stato del sistema e conteggio delle rotte deviate
-- diagnostica visibile se il layer mappa non si inizializza correttamente
+Il mockup e servibile direttamente come sito statico GitHub Pages:
 
-## File principali
+- `index.html`
+- `styles.css`
+- `app.js`
 
-- `index.html`: struttura della pagina e inclusione del layer mappa
-- `styles.css`: layout, overlay, stile della mappa e responsive behavior
-- `app.js`: dataset dei nodi, scenari di crisi e rendering dei flussi
+## Backend Convex
+
+La cartella `convex/` contiene schema, query, mutation, ingestione RSS e cron orario.
+
+Per collegarlo al tuo account Convex:
+
+```bash
+npm install
+npx convex login
+npx convex dev
+```
+
+Poi esegui la mutation `news:seedInitialSources` per inserire le fonti iniziali.
+
+Reuters e altre fonti premium sono modellate come `licensed` e disattivate finche non c'e una licenza valida.
