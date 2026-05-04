@@ -1,5 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
-import { internalMutation, internalQuery, mutation, query, internalAction } from "./_generated/server";
+import { action, internalAction, internalMutation, internalQuery, mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { v } from "convex/values";
 
@@ -95,6 +95,18 @@ function buildImplication(title: string) {
   return "Da valutare per mercati, policy e strategie aziendali.";
 }
 
+async function ensureSeedSources(ctx: any) {
+  let inserted = 0;
+  for (const source of seedSources) {
+    const existing = await ctx.db.query("sources").filter((q: any) => q.eq(q.field("url"), source.url)).first();
+    if (!existing) {
+      await ctx.db.insert("sources", source);
+      inserted += 1;
+    }
+  }
+  return inserted;
+}
+
 export const listFlashNews = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
@@ -125,10 +137,116 @@ export const listSources = query({
 export const seedInitialSources = mutation({
   args: {},
   handler: async (ctx) => {
-    for (const source of seedSources) {
-      const existing = await ctx.db.query("sources").filter((q) => q.eq(q.field("url"), source.url)).first();
-      if (!existing) await ctx.db.insert("sources", source);
+    return await ensureSeedSources(ctx);
+  },
+});
+
+export const seedDemoData = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const sourcesInserted = await ensureSeedSources(ctx);
+    const source = await ctx.db.query("sources").filter((q) => q.eq(q.field("name"), "Google News RSS - Energy Transition Europe")).first();
+    if (!source) return { sourcesInserted, demoInserted: 0 };
+
+    const now = Date.now();
+    const demoTitle = "Germania sotto zero per 6 ore consecutive";
+    const demoUrl = "https://energyshift.it/demo/germania-prezzi-negativi";
+    const demoHash = hashArticle(source.name, demoTitle, demoUrl);
+    let article = await ctx.db.query("rawArticles").withIndex("by_hash", (q) => q.eq("hash", demoHash)).first();
+
+    if (!article) {
+      const articleId = await ctx.db.insert("rawArticles", {
+        sourceId: source._id,
+        sourceName: source.name,
+        title: demoTitle,
+        url: demoUrl,
+        publishedAt: now,
+        summary: "Produzione solare elevata e domanda debole spingono il mercato day-ahead tedesco in territorio negativo.",
+        language: "it",
+        hash: demoHash,
+        fetchedAt: now,
+      });
+      article = await ctx.db.get(articleId);
     }
+
+    if (!article) return { sourcesInserted, demoInserted: 0 };
+
+    const existingFlash = await ctx.db.query("flashNews").filter((q) => q.eq(q.field("articleId"), article._id)).first();
+    if (!existingFlash) {
+      await ctx.db.insert("flashNews", {
+        articleId: article._id,
+        title: demoTitle,
+        sourceName: source.name,
+        topic: "mercati",
+        relevanceScore: 96,
+        urgency: "alta",
+        implication: "Segnale favorevole per batterie, demand response e flessibilita intraday.",
+        status: "new",
+        publishedAt: now,
+      });
+    }
+
+    const existingEditorial = await ctx.db
+      .query("editorialSelections")
+      .withIndex("by_weeklyIssue", (q) => q.eq("weeklyIssue", "2026-W18"))
+      .first();
+    if (!existingEditorial) {
+      await ctx.db.insert("editorialSelections", {
+        articleIds: [article._id],
+        title: "La nuova geografia europea dello storage",
+        weeklyIssue: "2026-W18",
+        editorNote: "Selezione iniziale Energy Shift per validare il workflow editoriale.",
+        whyItMatters: "Prezzi negativi, spread regionali e aste capacity stanno convergendo nello stesso segnale d'investimento.",
+        implications: ["Storage", "Flessibilita", "PPAs", "Rete"],
+        status: "draft",
+        selectedBy: "Codex",
+        selectedAt: now,
+      });
+    }
+
+    const existingBrief = await ctx.db.query("briefs").withIndex("by_date", (q) => q.eq("date", "2026-05-04")).first();
+    if (!existingBrief) {
+      await ctx.db.insert("briefs", {
+        title: "Briefing giornaliero Energy Shift",
+        date: "2026-05-04",
+        leadStoryId: article._id,
+        marketSummary: "Prezzi negativi in Germania evidenziano il valore crescente della flessibilita.",
+        policySummary: "La discussione europea su storage e market design resta centrale.",
+        infrastructureSummary: "Gli spread regionali aumentano l'attenzione su rete e interconnessioni.",
+        companySummary: "Utilities e developer accelerano pipeline batterie e contratti PPA.",
+        citations: [article._id],
+        exportStatus: "draft",
+      });
+    }
+
+    for (const [countryCode, priceEurMwh, delta] of [["DE", -12, -38], ["FR", 18, 4], ["IT", 92, 12], ["ES", 34, -6], ["NL", 5, -11], ["PL", 76, 9]] as const) {
+      const existingPrice = await ctx.db
+        .query("priceSnapshots")
+        .withIndex("by_country_date", (q) => q.eq("countryCode", countryCode).eq("date", "2026-05-04"))
+        .first();
+      if (!existingPrice) {
+        await ctx.db.insert("priceSnapshots", {
+          countryCode,
+          market: "day_ahead",
+          date: "2026-05-04",
+          hour: 12,
+          priceEurMwh,
+          delta,
+          source: "Energy Charts API",
+          fetchedAt: now,
+        });
+      }
+    }
+
+    return { sourcesInserted, demoInserted: 1 };
+  },
+});
+
+export const triggerFeedRefresh = action({
+  args: {},
+  handler: async (ctx) => {
+    await ctx.runAction(internal.news.fetchFeeds);
+    return "ok";
   },
 });
 
