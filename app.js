@@ -1,46 +1,37 @@
-const heroTags = ["Mercati", "Policy", "Storage"];
+const heroTags = ["Mercati", "Storage", "Rete"];
 
 const implications = [
-  ["↗", "Mercati", "Prezzi negativi e spread regionali evidenziano il valore della flessibilita."],
-  ["⚖", "Policy", "Regole UE e market design spostano attenzione su storage e trasparenza."],
-  ["⌁", "Infrastrutture", "Interconnessioni e congestioni diventano decisive per catturare valore."],
-  ["▥", "Aziende", "Utilities, IPP e corporate buyer rivedono PPAs, batterie e strategie merchant."],
+  ["Mercati", "Spread regionali in aumento"],
+  ["Storage", "Valore maggiore nelle ore centrali"],
+  ["Rete", "Congestioni e interconnessioni decisive"],
 ];
 
-const sources = [
-  ["EC", "Energy market integrity and transparency rules", "Commissione europea", "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en"],
-  ["EN", "ENTSO-E Transparency Platform", "ENTSO-E", "https://transparency.entsoe.eu/"],
-  ["RN", "Renewables and storage market news", "Renewables Now", "https://renewablesnow.com/"],
-  ["SP", "Gas, LNG and power market research", "S&P Global Energy", "https://www.spglobal.com/commodity-insights/en/news-research"],
-  ["EG", "German grid and energy regulation", "Bundesnetzagentur", "https://www.bundesnetzagentur.de/"],
-];
-
-const prices = [
-  ["🇩🇪", "DE", -12, -38, "down", [23, 20, 18, 17, 14, 8, 12, 19, 5, 7]],
-  ["🇫🇷", "FR", 18, 4, "up", [22, 18, 25, 19, 26, 21, 20, 17, 16, 14]],
-  ["🇮🇹", "IT", 92, 12, "up", [72, 91, 84, 55, 49, 45, 42, 38, 43, 61]],
-  ["🇪🇸", "ES", 34, -6, "down", [42, 36, 45, 28, 31, 24, 29, 26, 39, 35]],
-  ["🇳🇱", "NL", 5, -11, "down", [22, 17, 10, 4, 2, 0, 5, 12, 9, 6]],
-  ["🇵🇱", "PL", 76, 9, "up", [83, 75, 68, 63, 66, 54, 51, 59, 74, 72]],
+const mapZones = [
+  ["Nordics", "Nordici", 48.7, "low", "M210 52 L250 82 L242 132 L204 152 L172 126 L180 78 Z", 218, 105],
+  ["GB", "UK", 116.9, "mid", "M72 170 L118 150 L142 190 L112 230 L68 215 Z", 103, 190],
+  ["FR", "FR", 101.7, "midlow", "M156 238 L220 224 L256 270 L228 334 L156 326 L126 282 Z", 190, 282],
+  ["DE", "DE", 129.9, "high", "M238 192 L286 184 L314 230 L296 282 L244 278 L218 228 Z", 266, 236],
+  ["ES", "ES", 68.0, "low", "M92 330 L170 324 L190 378 L134 402 L74 376 Z", 132, 365],
+  ["IT", "IT", 134.3, "highest", "M298 298 L334 314 L354 374 L338 404 L306 350 L282 326 Z", 322, 350],
+  ["PL", "PL", 117.3, "midhigh", "M312 198 L370 206 L386 258 L334 284 L298 250 Z", 342, 240],
+  ["BAL", "Baltici", 93.6, "midlow", "M350 122 L392 130 L402 184 L360 186 L338 154 Z", 370, 158],
+  ["RO", "RO", 112.0, "midhigh", "M366 296 L428 300 L450 340 L404 366 L352 336 Z", 402, 330],
+  ["GR", "GR", 100.5, "midlow", "M368 370 L424 370 L438 410 L386 416 Z", 404, 394],
+  ["CH", "CH", 124.8, "high", "M244 286 L286 282 L302 310 L260 326 L232 306 Z", 266, 304],
 ];
 
 const flashNews = [
-  { topic: "Prezzi", title: "Germania sotto zero per 6 ore consecutive", source: "Energy Charts · feed prezzi", time: "11 min fa", implication: "Segnale favorevole per batterie e demand response.", score: 96 },
-  { topic: "Policy", title: "UE rafforza trasparenza e reporting REMIT", source: "Commissione europea", time: "42 min fa", implication: "Maggiore sorveglianza dei mercati wholesale e nuovi obblighi dati.", score: 91 },
-  { topic: "Rete", title: "Interconnessioni sotto osservazione nel Baltico", source: "ENTSO-E", time: "1 h fa", implication: "Rischio spread locali nelle ore serali e maggiore valore per flessibilita.", score: 84 },
-  { topic: "LNG", title: "Domanda LNG in calo nel Nord-Ovest Europa", source: "S&P Global Energy", time: "2 h fa", implication: "Pressione ribassista su TTF e gas-to-power.", score: 79 },
+  { topic: "Prezzi", title: "Germania sotto zero per 6 ore consecutive", source: "Energy Charts", implication: "Segnale favorevole per batterie e demand response.", score: 96 },
+  { topic: "Policy", title: "UE rafforza reporting e trasparenza REMIT", source: "Commissione europea", implication: "Nuovi obblighi dati per mercati wholesale.", score: 91 },
+  { topic: "Rete", title: "Interconnessioni sotto osservazione nel Baltico", source: "ENTSO-E", implication: "Possibile aumento degli spread serali.", score: 84 },
+  { topic: "LNG", title: "Domanda LNG in calo nel Nord-Ovest Europa", source: "S&P Global Energy", implication: "Pressione su TTF e gas-to-power.", score: 79 },
 ];
 
 const editorialPicks = [
-  { title: "Le rinnovabili superano il carbone nella generazione elettrica globale", copy: "Perche conta: il passaggio e simbolico e industriale insieme. Il sistema elettrico entra in una fase in cui solare ed eolico non sono piu laterali, ma centrali.", sources: "Carbon Brief · Ember" },
-  { title: "Batterie: la flessibilita diventa il nuovo terreno competitivo", copy: "La competizione si sposta dalla pura generazione alla capacita di spostare energia nel tempo, catturando spread e servizi di rete.", sources: "IEA · BloombergNEF" },
-  { title: "Italia: il solare diventa prima fonte rinnovabile del mese", copy: "La crescita fotovoltaica rende piu urgente coordinare storage, domanda flessibile e reti per evitare che il valore si perda nelle ore centrali.", sources: "Terna · pv magazine Italia" },
-];
-
-const signals = [
-  ["▤", "Storage: aste e capacity market entrano nel radar investitori", "La flessibilita diventa infrastruttura economica, non solo tecnologia di supporto."],
-  ["⌁", "LNG: sicurezza energetica ancora centrale", "Gas e rinnovabili vanno letti insieme: rischio geopolitico e resilienza del sistema."],
-  ["□", "PPAs: ritorno alla disciplina di prezzo", "Buyer industriali piu selettivi, ma contratti long-term ancora chiave per bancabilita."],
+  { title: "Le rinnovabili superano il carbone nella generazione elettrica globale", copy: "Il passaggio e simbolico e industriale insieme: solare ed eolico non sono piu laterali, ma centrali.", sources: "Carbon Brief · Ember" },
+  { title: "Batterie: la flessibilita diventa il nuovo terreno competitivo", copy: "La competizione si sposta dalla pura generazione alla capacita di spostare energia nel tempo.", sources: "IEA · BloombergNEF" },
+  { title: "Italia: il solare diventa prima fonte rinnovabile del mese", copy: "La crescita fotovoltaica rende piu urgente coordinare storage, domanda flessibile e reti.", sources: "Terna · pv magazine Italia" },
+  { title: "REMIT: nuove regole UE su integrita e trasparenza", copy: "Piu reporting verso ACER e maggiore sorveglianza dei mercati energetici wholesale.", sources: "Commissione europea · ACER" },
 ];
 
 function renderTags() {
@@ -48,60 +39,35 @@ function renderTags() {
 }
 
 function renderImplications() {
-  document.getElementById("implications").innerHTML = implications.map(([icon, title, copy]) => `
-    <div class="implication"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div></div>
+  document.getElementById("implications").innerHTML = implications.map(([title, copy]) => `
+    <div class="impact-pill"><strong>${title}</strong><span>${copy}</span></div>
   `).join("");
 }
 
-function renderSources() {
-  document.getElementById("sources").innerHTML = sources.map(([icon, title, meta, url]) => `
-    <a class="source-item source-link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="meta">${meta}</p></div><span>↗</span></a>
-  `).join("");
-}
-
-function sparkline(points) {
-  const width = 180;
-  const height = 38;
-  const min = Math.min(...points);
-  const max = Math.max(...points);
-  const range = max - min || 1;
-  const step = width / (points.length - 1);
-  const d = points.map((point, index) => {
-    const x = index * step;
-    const y = height - ((point - min) / range) * (height - 8) - 4;
-    return `${index === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
-  }).join(" ");
-  return `<svg class="spark" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="#0A5BD3" stroke-width="3" stroke-linecap="round"/></svg>`;
-}
-
-function renderPrices() {
-  document.getElementById("price-grid").innerHTML = prices.map(([flag, code, value, delta, trend, points]) => `
-    <article class="price-card"><div class="country"><span class="flag">${flag}</span>${code}</div><div class="price ${value < 0 ? "negative" : ""}">${value}</div>${sparkline(points)}<div class="delta ${trend}">${delta > 0 ? "+" : ""}${delta} ${trend === "up" ? "↑" : "↓"} <span>vs ieri</span></div></article>
+function renderPriceMap() {
+  document.getElementById("price-map").innerHTML = mapZones.map(([id, label, value, level, path, x, y]) => `
+    <g class="map-zone zone-${level}">
+      <path d="${path}" />
+      <text x="${x}" y="${y}">${String(value).replace(".", ",")}</text>
+      <text class="zone-label" x="${x}" y="${y + 18}">${label}</text>
+    </g>
   `).join("");
 }
 
 function renderFlash() {
   document.getElementById("flash-list").innerHTML = flashNews.map((item) => `
-    <article class="flash-item"><span class="flash-topic">${item.topic}</span><div><p class="item-title">${item.title}</p><p class="item-copy">${item.implication}</p><p class="meta">${item.source} · ${item.time}</p></div><span class="relevance">${item.score}</span></article>
+    <article class="flash-item"><span class="flash-topic">${item.topic}</span><div><p class="item-title">${item.title}</p><p class="item-copy">${item.implication}</p><p class="meta">${item.source}</p></div><span class="relevance">${item.score}</span></article>
   `).join("");
 }
 
 function renderEditorial() {
   document.getElementById("editorial-list").innerHTML = editorialPicks.map((item) => `
-    <article class="editorial-item"><div class="editorial-top"><p class="item-title">${item.title}</p></div><p class="item-copy">${item.copy}</p><p class="meta">${item.sources}</p></article>
-  `).join("");
-}
-
-function renderSignals() {
-  document.getElementById("market-signals").innerHTML = signals.map(([icon, title, copy]) => `
-    <div class="signal-item"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div></div>
+    <article class="editorial-item"><p class="item-title">${item.title}</p><p class="item-copy">${item.copy}</p><p class="meta">${item.sources}</p></article>
   `).join("");
 }
 
 renderTags();
 renderImplications();
-renderSources();
-renderPrices();
+renderPriceMap();
 renderFlash();
 renderEditorial();
-renderSignals();
