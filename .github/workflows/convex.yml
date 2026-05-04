@@ -3,7 +3,13 @@ name: Deploy Convex
 on:
   push:
     branches:
+      - main
       - codex/news-cockpit-convex
+    paths:
+      - "convex/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/convex.yml"
   workflow_dispatch:
 
 permissions:
