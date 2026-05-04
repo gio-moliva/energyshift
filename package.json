@@ -1,0 +1,16 @@
+{
+  "name": "energyshift-news-cockpit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "serve": "python -m http.server 4173"
+  },
+  "dependencies": {
+    "convex": "^1.19.4",
+    "fast-xml-parser": "^4.5.3"
+  },
+  "devDependencies": {}
+}
