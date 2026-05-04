@@ -19,98 +19,66 @@
           <span>Energy</span>
           <strong>Shift</strong>
         </a>
-        <div class="view-switch">Energy Transition News Cockpit</div>
+        <div class="product-title">Energy Transition News Cockpit</div>
         <div class="toolbar" aria-label="Contesto briefing">
-          <div class="tool-button" aria-label="Data briefing">
-            <span aria-hidden="true">□</span>
-            4 maggio 2026
-          </div>
-          <div class="tool-button" aria-label="Area geografica">
-            <span aria-hidden="true">◎</span>
-            Europa
-          </div>
+          <div class="tool-button">17 aprile 2026</div>
+          <div class="view-toggle" aria-label="Tema chiaro selezionato"><span></span></div>
         </div>
       </header>
 
-      <section class="hero-grid" aria-label="Panoramica del giorno">
-        <article class="lead-card">
-          <div class="lead-copy">
-            <p class="eyebrow">Vetrina prodotto</p>
-            <h1>Prezzi negativi in Germania: il solare spinge il mercato <span>sotto zero</span></h1>
-            <p>
-              Una preview del cockpit Energy Shift per leggere insieme prezzi elettrici, notizie flash,
-              fonti e implicazioni per mercati, policy, infrastrutture e aziende.
-            </p>
-            <div class="tag-row" id="hero-tags"></div>
-          </div>
-          <div class="map-visual" aria-hidden="true">
-            <svg viewBox="0 0 380 250" role="img">
-              <path class="map-line faint" d="M44 170 C95 118 126 111 151 70 C179 26 228 38 253 71 C280 106 308 103 341 63" />
-              <path class="map-line" d="M70 210 C116 164 142 148 164 105 C190 55 232 62 254 94 C282 135 302 128 338 87" />
-              <circle class="map-dot" cx="164" cy="105" r="8" />
-              <circle class="map-dot hollow" cx="254" cy="94" r="7" />
-              <circle class="map-dot" cx="302" cy="128" r="5" />
-              <path class="coast" d="M40 70 C75 48 122 40 163 46 C206 52 234 22 275 37 C313 49 335 77 350 110" />
-              <path class="coast" d="M74 132 C109 117 145 121 183 140 C218 157 249 156 286 145" />
-            </svg>
-          </div>
+      <section class="dashboard-grid" aria-label="Vetrina Energy Transition News Cockpit">
+        <article class="card lead-card">
+          <p class="eyebrow">Notizia principale</p>
+          <h1>Prezzi negativi in Germania: il solare spinge il mercato <span>sotto zero</span></h1>
+          <p class="lead-text">
+            Forte produzione solare e domanda debole portano a prezzi negativi prolungati. Il divario con l'Italia si amplia,
+            mentre cresce il valore di storage, flessibilita e interconnessioni.
+          </p>
+          <div class="tag-row" id="hero-tags"></div>
+          <div class="impact-strip" id="implications"></div>
         </article>
 
-        <aside class="quick-card">
-          <div class="section-head">
-            <p>Implicazioni rapide</p>
-          </div>
-          <div id="implications"></div>
-        </aside>
-
-        <aside class="source-card">
-          <div class="section-head with-count">
-            <p>Fonti</p>
-            <span>5</span>
-          </div>
-          <div id="sources"></div>
-        </aside>
-      </section>
-
-      <section class="price-band card" aria-labelledby="prices-title">
-        <div class="section-head inline">
-          <div>
-            <p id="prices-title">Prezzi elettricita day-ahead</p>
-            <span>€/MWh · dati dimostrativi su layout Energy Charts API</span>
-          </div>
-        </div>
-        <div class="price-grid" id="price-grid"></div>
-      </section>
-
-      <section class="content-grid showcase-grid">
-        <article class="card flash-card">
+        <article class="card map-card">
           <div class="section-head inline">
             <div>
-              <p>Notizie flash</p>
-              <span>Esempio di feed intelligence per monitoraggio quotidiano</span>
+              <p>Prezzi medi day-ahead</p>
+              <span>Settimana 19 · EUR/MWh · scala Energy Shift</span>
             </div>
           </div>
-          <div class="flash-list" id="flash-list"></div>
+          <div class="map-layout">
+            <div class="legend-scale" aria-label="Legenda prezzi">
+              <span>45</span>
+              <i></i>
+              <span>80</span>
+              <i></i>
+              <span>110</span>
+              <i></i>
+              <span>135</span>
+            </div>
+            <svg class="europe-map" viewBox="0 0 520 430" role="img" aria-label="Mappa dimostrativa dei prezzi day-ahead europei">
+              <g id="price-map"></g>
+            </svg>
+          </div>
         </article>
 
         <article class="card editorial-card">
           <div class="section-head inline">
             <div>
-              <p>Scelte Energy Shift</p>
-              <span>Selezione settimanale ad alta rilevanza editoriale</span>
+              <p>Selezione notizie</p>
+              <span>Scelte settimanali Energy Shift</span>
             </div>
           </div>
           <div class="editorial-list" id="editorial-list"></div>
         </article>
 
-        <article class="card market-card">
+        <article class="card flash-card">
           <div class="section-head inline">
             <div>
-              <p>Segnali di mercato</p>
-              <span>Storage, PPAs, LNG, rete</span>
+              <p>Notizie flash</p>
+              <span>Segnali rapidi da fonti e feed energia</span>
             </div>
           </div>
-          <div id="market-signals"></div>
+          <div class="flash-list" id="flash-list"></div>
         </article>
       </section>
     </main>
