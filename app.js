@@ -18,29 +18,21 @@ const flashNews = [
   {
     topic: "Prezzi",
     title: "Germania sotto zero per 6 ore consecutive",
-    source: "Energy Charts",
-    implication: "Segnale favorevole per batterie e demand response.",
     url: "https://www.energy-charts.info/charts/price_average_map/chart.htm?l=it&c=EU",
   },
   {
     topic: "Policy",
     title: "UE rafforza reporting e trasparenza REMIT",
-    source: "Commissione europea",
-    implication: "Nuovi obblighi dati per mercati wholesale.",
     url: "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en",
   },
   {
     topic: "Rete",
     title: "Interconnessioni sotto osservazione nel Baltico",
-    source: "ENTSO-E",
-    implication: "Possibile aumento degli spread serali.",
     url: "https://transparency.entsoe.eu/",
   },
   {
     topic: "LNG",
     title: "Domanda LNG in calo nel Nord-Ovest Europa",
-    source: "S&P Global Energy",
-    implication: "Pressione su TTF e gas-to-power.",
     url: "https://www.spglobal.com/commodity-insights/en/news-research",
   },
 ];
@@ -217,8 +209,6 @@ function normalizeFlashItem(item) {
   return {
     topic: item.topic || "News",
     title: item.title || "Notizia flash",
-    source: item.source || item.sourceName || "Convex",
-    implication: item.implication || "Da valutare per mercati, policy e strategie aziendali.",
     url: item.url,
   };
 }
@@ -246,7 +236,7 @@ function renderFlash(items = flashNews) {
 
   list.innerHTML = items.map((rawItem) => {
     const item = normalizeFlashItem(rawItem);
-    const body = `<span class="flash-topic">${escapeHtml(item.topic)}</span><div><p class="item-title">${escapeHtml(item.title)}</p><p class="item-copy">${escapeHtml(item.implication)}</p><p class="meta">${escapeHtml(item.source)}</p></div>`;
+    const body = `<span class="flash-topic">${escapeHtml(item.topic)}</span><div><p class="item-title">${escapeHtml(item.title)}</p></div>`;
 
     if (item.url) {
       return `<a class="flash-item news-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${body}<span class="open-mark">↗</span></a>`;
