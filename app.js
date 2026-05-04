@@ -1,3 +1,6 @@
+const CONVEX_URL = "https://brainy-bear-194.convex.cloud";
+const FLASH_REFRESH_MS = 10 * 60 * 1000;
+
 const pricePoints = [
   { code: "NO", names: ["Norway", "Norvegia"], value: 48.7, coords: [61.5, 10.5] },
   { code: "DK", names: ["Denmark", "Danimarca"], value: 76.1, coords: [56.1, 10.0] },
@@ -68,6 +71,16 @@ const editorialPicks = [
     url: "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en",
   },
 ];
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>'"]/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;",
+  })[character]);
+}
 
 function initEnergySavingMode() {
   const toggle = document.getElementById("energy-toggle");
@@ -200,10 +213,62 @@ async function initPriceMap() {
   setTimeout(() => map.invalidateSize(), 80);
 }
 
-function renderFlash() {
-  document.getElementById("flash-list").innerHTML = flashNews.map((item) => `
-    <a class="flash-item news-link" href="${item.url}" target="_blank" rel="noopener noreferrer"><span class="flash-topic">${item.topic}</span><div><p class="item-title">${item.title}</p><p class="item-copy">${item.implication}</p><p class="meta">${item.source}</p></div><span class="open-mark">↗</span></a>
-  `).join("");
+function normalizeFlashItem(item) {
+  return {
+    topic: item.topic || "News",
+    title: item.title || "Notizia flash",
+    source: item.source || item.sourceName || "Convex",
+    implication: item.implication || "Da valutare per mercati, policy e strategie aziendali.",
+    url: item.url,
+  };
+}
+
+async function fetchConvexFlashNews() {
+  const response = await fetch(`${CONVEX_URL}/api/query`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      path: "news:listFlashNews",
+      args: { limit: 6 },
+      format: "json",
+    }),
+  });
+
+  if (!response.ok) throw new Error("Convex non disponibile");
+  const payload = await response.json();
+  if (payload.status !== "success") throw new Error(payload.errorMessage || "Query Convex fallita");
+  return payload.value.map(normalizeFlashItem);
+}
+
+function renderFlash(items = flashNews) {
+  const list = document.getElementById("flash-list");
+  if (!list) return;
+
+  list.innerHTML = items.map((rawItem) => {
+    const item = normalizeFlashItem(rawItem);
+    const body = `<span class="flash-topic">${escapeHtml(item.topic)}</span><div><p class="item-title">${escapeHtml(item.title)}</p><p class="item-copy">${escapeHtml(item.implication)}</p><p class="meta">${escapeHtml(item.source)}</p></div>`;
+
+    if (item.url) {
+      return `<a class="flash-item news-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${body}<span class="open-mark">↗</span></a>`;
+    }
+
+    return `<article class="flash-item">${body}</article>`;
+  }).join("");
+}
+
+async function refreshFlashNews() {
+  try {
+    const liveFlashNews = await fetchConvexFlashNews();
+    if (liveFlashNews.length > 0) renderFlash(liveFlashNews);
+  } catch (error) {
+    renderFlash(flashNews);
+  }
+}
+
+function initFlashNews() {
+  renderFlash(flashNews);
+  refreshFlashNews();
+  setInterval(refreshFlashNews, FLASH_REFRESH_MS);
 }
 
 function renderEditorial() {
@@ -214,5 +279,5 @@ function renderEditorial() {
 
 initEnergySavingMode();
 initPriceMap();
-renderFlash();
+initFlashNews();
 renderEditorial();
