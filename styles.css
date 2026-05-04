@@ -53,13 +53,18 @@ body.energy-saving .topbar { background: rgba(8, 11, 16, 0.92); }
 .product-title { font-size: clamp(22px, 2vw, 34px); font-weight: 850; letter-spacing: -0.045em; }
 .toolbar { display: flex; gap: 10px; align-items: center; }
 .tool-button { min-height: 42px; display: inline-flex; align-items: center; border: var(--line); background: var(--white); color: var(--ink); border-radius: 8px; padding: 0 14px; font-weight: 750; }
-.energy-toggle { min-height: 42px; display: inline-flex; align-items: center; gap: 10px; border: var(--line); border-radius: 999px; background: var(--white); color: var(--ink); padding: 4px 5px 4px 14px; font: inherit; font-weight: 850; cursor: pointer; box-shadow: 0 10px 22px rgba(13, 33, 63, 0.05); }
+.energy-toggle { min-height: 42px; display: inline-flex; align-items: center; gap: 10px; border: var(--line); border-radius: 999px; background: var(--white); color: var(--ink); padding: 4px 6px 4px 14px; font: inherit; font-weight: 850; cursor: pointer; box-shadow: 0 10px 22px rgba(13, 33, 63, 0.05); }
 .energy-toggle:focus-visible { outline: 3px solid rgba(10, 91, 211, 0.24); outline-offset: 3px; }
 .toggle-copy { font-size: 13px; white-space: nowrap; }
-.toggle-track { position: relative; width: 62px; height: 32px; border-radius: 999px; background: linear-gradient(90deg, #0a5bd3 0%, #0a5bd3 50%, #e6f0ff 50%, #e6f0ff 100%); border: 1px solid rgba(10, 91, 211, 0.22); transition: background 180ms ease; }
-.toggle-thumb { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #ffffff; box-shadow: 0 5px 14px rgba(10, 91, 211, 0.28); transition: transform 180ms ease, background 180ms ease; }
-.energy-toggle[aria-pressed="true"] .toggle-track { background: linear-gradient(90deg, #17202c 0%, #17202c 52%, #69a7ff 52%, #69a7ff 100%); }
-.energy-toggle[aria-pressed="true"] .toggle-thumb { transform: translateX(30px); background: #f7fbff; }
+.toggle-track { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; width: 68px; height: 32px; border-radius: 999px; background: #e6f0ff; border: 1px solid rgba(10, 91, 211, 0.22); transition: background 180ms ease; }
+.toggle-icon { position: relative; z-index: 2; justify-self: center; width: 15px; height: 15px; fill: none; stroke: var(--blue); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 180ms ease; }
+.sun-icon circle { fill: none; }
+.moon-icon { stroke: #6b7280; }
+.toggle-thumb { position: absolute; top: 3px; left: 3px; z-index: 1; width: 30px; height: 24px; border-radius: 999px; background: #ffffff; box-shadow: 0 5px 14px rgba(10, 91, 211, 0.24); transition: transform 180ms ease, background 180ms ease; }
+.energy-toggle[aria-pressed="true"] .toggle-track { background: #17202c; border-color: rgba(105, 167, 255, 0.28); }
+.energy-toggle[aria-pressed="true"] .toggle-thumb { transform: translateX(31px); background: #0c1118; }
+.energy-toggle[aria-pressed="true"] .sun-icon { stroke: #62758f; }
+.energy-toggle[aria-pressed="true"] .moon-icon { stroke: #f7fbff; }
 .dashboard-grid { display: grid; grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.22fr); grid-template-rows: minmax(300px, 0.95fr) minmax(330px, 1fr); gap: 12px; margin-top: 12px; min-height: calc(100vh - 98px); }
 .card { border: var(--line); border-radius: 8px; background: rgba(255, 255, 255, 0.94); box-shadow: 0 12px 28px rgba(13, 33, 63, 0.045); padding: 22px; overflow: hidden; transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
 body.energy-saving .card { background: rgba(12, 17, 24, 0.96); box-shadow: var(--shadow); }
@@ -81,11 +86,17 @@ body.energy-saving .lead-text { color: var(--gray-700); }
 .legend-scale { display: grid; grid-template-rows: auto 1fr auto; align-items: center; justify-items: center; color: var(--gray-700); font-size: 12px; font-weight: 750; }
 .legend-scale i { width: 18px; height: 100%; min-height: 180px; display: block; background: linear-gradient(180deg, #052f73, #0a5bd3, #9dc4ff, #e6f0ff); border-radius: 4px; }
 body.energy-saving .legend-scale i { background: linear-gradient(180deg, #69a7ff, #3d78d7, #244c8f, #102541); }
-.price-map { width: 100%; height: 100%; min-height: 310px; border-radius: 8px; overflow: hidden; background: #f7faff; border: 1px solid var(--gray-200); }
+.price-map { width: 100%; height: 100%; min-height: 340px; border-radius: 8px; overflow: hidden; background: #f7faff; border: 1px solid var(--gray-200); cursor: grab; }
+.price-map:active { cursor: grabbing; }
 .leaflet-container { font-family: "Inter", "Segoe UI", sans-serif; background: #f7faff; }
+.leaflet-control-zoom { margin: 12px !important; border: 0 !important; box-shadow: 0 8px 18px rgba(13, 33, 63, 0.12); }
+.leaflet-control-zoom a { width: 30px !important; height: 30px !important; border: 0 !important; color: var(--blue) !important; background: rgba(255, 255, 255, 0.92) !important; line-height: 30px !important; font-weight: 900; }
+.leaflet-control-zoom a:first-child { border-radius: 8px 8px 0 0 !important; }
+.leaflet-control-zoom a:last-child { border-radius: 0 0 8px 8px !important; }
 .leaflet-pane .leaflet-tile { filter: saturate(0.1) hue-rotate(178deg) brightness(1.07) contrast(0.96); }
 body.energy-saving .leaflet-container { background: #0d1420; }
 body.energy-saving .leaflet-pane .leaflet-tile { filter: grayscale(1) invert(1) brightness(0.72) contrast(0.92) hue-rotate(180deg); opacity: 0.42; }
+body.energy-saving .leaflet-control-zoom a { color: #69a7ff !important; background: rgba(12, 17, 24, 0.92) !important; }
 .leaflet-overlay-pane path { transition: fill-opacity 160ms ease; }
 .country-price-label { display: grid; place-items: center; width: 58px; height: 38px; border-radius: 8px; background: rgba(255, 255, 255, 0.82); border: 1px solid rgba(10, 91, 211, 0.16); box-shadow: 0 8px 18px rgba(13, 33, 63, 0.1); color: #0d0d0f; line-height: 1; pointer-events: none; }
 body.energy-saving .country-price-label { background: rgba(9, 14, 22, 0.86); border-color: rgba(105, 167, 255, 0.24); color: #f7fbff; }
@@ -112,4 +123,6 @@ body.energy-saving .country-price-label { background: rgba(9, 14, 22, 0.86); bor
   h1 { font-size: 42px; }
   .map-layout { grid-template-columns: 1fr; }
   .legend-scale { display: none; }
+  .energy-toggle { padding-left: 10px; }
+  .toggle-copy { font-size: 12px; }
 }
