@@ -1,18 +1,18 @@
-const heroTags = ["Mercati", "Rete", "Storage"];
+const heroTags = ["Mercati", "Policy", "Storage"];
 
 const implications = [
-  ["↗", "Mercati", "Pressione al ribasso sui ricavi merchant in Europa centrale."],
-  ["⚖", "Policy", "Le nuove regole sulla flessibilita accelerano la domanda di storage."],
-  ["⌁", "Infrastrutture", "Ritardi sugli interconnettori aumentano gli spread regionali."],
-  ["▥", "Aziende", "Utilities e developer accelerano investimenti in batterie e contratti PPA."],
+  ["↗", "Mercati", "Prezzi negativi e spread regionali evidenziano il valore della flessibilita."],
+  ["⚖", "Policy", "Regole UE e market design spostano attenzione su storage e trasparenza."],
+  ["⌁", "Infrastrutture", "Interconnessioni e congestioni diventano decisive per catturare valore."],
+  ["▥", "Aziende", "Utilities, IPP e corporate buyer rivedono PPAs, batterie e strategie merchant."],
 ];
 
 const sources = [
-  ["EC", "EU storage flexibility rules consultation launched", "Commissione europea · 2 h fa", "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en"],
-  ["EN", "ENTSO-E Transparency Platform", "ENTSO-E · dati e comunicazioni", "https://transparency.entsoe.eu/"],
-  ["RN", "Italy storage auction attracts record interest", "Renewables Now · news", "https://renewablesnow.com/"],
-  ["SP", "LNG demand slips in Northwest Europe", "S&P Global Energy · news", "https://www.spglobal.com/commodity-insights/en/news-research"],
-  ["EG", "German grid plan 2026-2030 published", "Bundesnetzagentur · rete", "https://www.bundesnetzagentur.de/"],
+  ["EC", "Energy market integrity and transparency rules", "Commissione europea", "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en"],
+  ["EN", "ENTSO-E Transparency Platform", "ENTSO-E", "https://transparency.entsoe.eu/"],
+  ["RN", "Renewables and storage market news", "Renewables Now", "https://renewablesnow.com/"],
+  ["SP", "Gas, LNG and power market research", "S&P Global Energy", "https://www.spglobal.com/commodity-insights/en/news-research"],
+  ["EG", "German grid and energy regulation", "Bundesnetzagentur", "https://www.bundesnetzagentur.de/"],
 ];
 
 const prices = [
@@ -25,32 +25,22 @@ const prices = [
 ];
 
 const flashNews = [
-  { topic: "Prezzi", title: "Germania sotto zero per 6 ore consecutive", source: "Google News RSS · Energy Charts", time: "11 min fa", implication: "Segnale favorevole per batterie e demand response.", score: 96 },
-  { topic: "Policy", title: "UE apre consultazione su flessibilita e storage", source: "Commissione europea RSS", time: "42 min fa", implication: "Potenziale accelerazione per capacity e flexibility markets.", score: 91 },
-  { topic: "Rete", title: "Manutenzione su interconnettore Baltico", source: "ENTSO-E Transparency RSS", time: "1 h fa", implication: "Rischio spread locali nelle ore serali.", score: 84 },
-  { topic: "LNG", title: "Domanda LNG in calo nel Nord-Ovest Europa", source: "S&P Global Energy RSS", time: "2 h fa", implication: "Pressione ribassista su TTF e gas-to-power.", score: 79 },
+  { topic: "Prezzi", title: "Germania sotto zero per 6 ore consecutive", source: "Energy Charts · feed prezzi", time: "11 min fa", implication: "Segnale favorevole per batterie e demand response.", score: 96 },
+  { topic: "Policy", title: "UE rafforza trasparenza e reporting REMIT", source: "Commissione europea", time: "42 min fa", implication: "Maggiore sorveglianza dei mercati wholesale e nuovi obblighi dati.", score: 91 },
+  { topic: "Rete", title: "Interconnessioni sotto osservazione nel Baltico", source: "ENTSO-E", time: "1 h fa", implication: "Rischio spread locali nelle ore serali e maggiore valore per flessibilita.", score: 84 },
+  { topic: "LNG", title: "Domanda LNG in calo nel Nord-Ovest Europa", source: "S&P Global Energy", time: "2 h fa", implication: "Pressione ribassista su TTF e gas-to-power.", score: 79 },
 ];
 
 const editorialPicks = [
-  { title: "La nuova geografia europea dello storage", status: "Approvata", copy: "Perche conta: aste capacity, spread intraday e prezzi negativi stanno convergendo nello stesso segnale d'investimento.", sources: "5 fonti · memo pronto" },
-  { title: "PPAs: stabilita dei prezzi nel Q2", status: "Bozza", copy: "Implicazione: buyer industriali tornano selettivi, ma i contratti long-term restano sotto 65 €/MWh nei mercati liquidi.", sources: "3 fonti · da verificare" },
-  { title: "Interconnessioni: il collo di bottiglia invisibile", status: "Approvata", copy: "L'aumento degli spread regionali rende piu strategici grid capex, curtailment management e accumuli distribuiti.", sources: "7 fonti · newsletter" },
+  { title: "Le rinnovabili superano il carbone nella generazione elettrica globale", copy: "Perche conta: il passaggio e simbolico e industriale insieme. Il sistema elettrico entra in una fase in cui solare ed eolico non sono piu laterali, ma centrali.", sources: "Carbon Brief · Ember" },
+  { title: "Batterie: la flessibilita diventa il nuovo terreno competitivo", copy: "La competizione si sposta dalla pura generazione alla capacita di spostare energia nel tempo, catturando spread e servizi di rete.", sources: "IEA · BloombergNEF" },
+  { title: "Italia: il solare diventa prima fonte rinnovabile del mese", copy: "La crescita fotovoltaica rende piu urgente coordinare storage, domanda flessibile e reti per evitare che il valore si perda nelle ore centrali.", sources: "Terna · pv magazine Italia" },
 ];
 
 const signals = [
-  ["▤", "Storage: asta in Italia per 1,6 GW di capacita", "Domanda record per il primo schema MACSE."],
-  ["⌁", "LNG: domanda in calo nel NW Europa", "Prezzi TTF in discesa del 6% su base settimanale."],
-  ["□", "PPAs: stabilita dei prezzi nel Q2", "Contratti a lungo termine ancora sotto i 65 €/MWh."],
-];
-
-const schemaTables = [
-  ["sources", "feed/API/manuale", "nome, url, topic, affidabilita"],
-  ["rawArticles", "ingestione", "titolo, url, summary, hash"],
-  ["flashNews", "notizie rapide", "topic, score, impatto, stato"],
-  ["editorialSelections", "redazione", "issue, whyItMatters, status"],
-  ["priceSnapshots", "mercati", "paese, ora, prezzo, delta"],
-  ["briefs", "output", "sintesi, citazioni, export"],
-  ["savedItems", "workspace", "utente, note, elemento salvato"],
+  ["▤", "Storage: aste e capacity market entrano nel radar investitori", "La flessibilita diventa infrastruttura economica, non solo tecnologia di supporto."],
+  ["⌁", "LNG: sicurezza energetica ancora centrale", "Gas e rinnovabili vanno letti insieme: rischio geopolitico e resilienza del sistema."],
+  ["□", "PPAs: ritorno alla disciplina di prezzo", "Buyer industriali piu selettivi, ma contratti long-term ancora chiave per bancabilita."],
 ];
 
 function renderTags() {
@@ -98,19 +88,13 @@ function renderFlash() {
 
 function renderEditorial() {
   document.getElementById("editorial-list").innerHTML = editorialPicks.map((item) => `
-    <article class="editorial-item"><div class="editorial-top"><p class="item-title">${item.title}</p><span class="status ${item.status === "Bozza" ? "draft" : ""}">${item.status}</span></div><p class="item-copy">${item.copy}</p><p class="meta">${item.sources}</p></article>
+    <article class="editorial-item"><div class="editorial-top"><p class="item-title">${item.title}</p></div><p class="item-copy">${item.copy}</p><p class="meta">${item.sources}</p></article>
   `).join("");
 }
 
 function renderSignals() {
   document.getElementById("market-signals").innerHTML = signals.map(([icon, title, copy]) => `
     <div class="signal-item"><span class="icon-tile">${icon}</span><div><p class="item-title">${title}</p><p class="item-copy">${copy}</p></div></div>
-  `).join("");
-}
-
-function renderSchema() {
-  document.getElementById("schema-grid").innerHTML = schemaTables.map(([name, role, fields]) => `
-    <div class="schema-table"><strong>${name}</strong><span>${role}</span><span>${fields}</span></div>
   `).join("");
 }
 
@@ -121,4 +105,3 @@ renderPrices();
 renderFlash();
 renderEditorial();
 renderSignals();
-renderSchema();
