@@ -110,7 +110,18 @@ async function ensureSeedSources(ctx: any) {
 export const listFlashNews = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
-    return await ctx.db.query("flashNews").withIndex("by_publishedAt").order("desc").take(args.limit ?? 20);
+    const flashes = await ctx.db.query("flashNews").withIndex("by_publishedAt").order("desc").take(args.limit ?? 20);
+
+    return await Promise.all(
+      flashes.map(async (flash) => {
+        const article = await ctx.db.get(flash.articleId);
+        return {
+          ...flash,
+          url: article?.url,
+          summary: article?.summary,
+        };
+      }),
+    );
   },
 });
 
