@@ -39,28 +39,28 @@ const flashNews = [
 
 const editorialPicks = [
   {
-    title: "Le rinnovabili superano il carbone nella generazione elettrica globale",
-    copy: "Il passaggio e simbolico e industriale insieme: solare ed eolico non sono piu laterali, ma centrali.",
-    sources: "Carbon Brief · Ember",
-    url: "https://www.carbonbrief.org/clean-energy-pushes-fossil-fuel-power-into-reverse-for-first-time-ever/",
+    title: "IRENA: rinnovabili 24/7 competitive con i fossili",
+    copy: "Solare, eolico e batterie iniziano a competere non solo sulla generazione, ma sulla fornitura continua.",
+    sources: "IRENA",
+    url: "https://www.irena.org/News/pressreleases/2026/May/24-7-Renewables-Outcompete-Fossil-Fuels-on-Firm-Costs",
   },
   {
-    title: "Batterie: la flessibilita diventa il nuovo terreno competitivo",
-    copy: "La competizione si sposta dalla pura generazione alla capacita di spostare energia nel tempo.",
-    sources: "IEA · BloombergNEF",
-    url: "https://www.iea.org/reports/global-energy-review-2026/technology-battery-storage",
+    title: "AccelerateEU: la crisi fossile diventa politica industriale europea",
+    copy: "L'UE lega sicurezza energetica, elettrificazione, reti, protezione dei consumatori e investimenti.",
+    sources: "Commissione europea",
+    url: "https://energy.ec.europa.eu/strategy/accelerateeu-strengthen-eu-energy-resilience_en",
   },
   {
-    title: "Italia: il solare diventa prima fonte rinnovabile del mese",
-    copy: "La crescita fotovoltaica rende piu urgente coordinare storage, domanda flessibile e reti.",
-    sources: "Terna · pv magazine Italia",
-    url: "https://www.pv-magazine.it/2026/04/21/a-marzo-prodotti-4-twh-di-elettricita-da-fotovoltaico-prima-fonte-rinnovabile-del-mese/",
+    title: "Storage e solare possono tagliare il conto del gas UE",
+    copy: "Lo scenario SolarPower Europe/Rystad lega flessibilita, prezzi day-ahead e minori importazioni di gas.",
+    sources: "SolarPower Europe - Rystad - PV Tech",
+    url: "https://www.pv-tech.org/solarpower-europes-ambitious-solar-scenario-operating-costs-european-solar-49/",
   },
   {
-    title: "REMIT: nuove regole UE su integrita e trasparenza",
-    copy: "Piu reporting verso ACER e maggiore sorveglianza dei mercati energetici wholesale.",
-    sources: "Commissione europea · ACER",
-    url: "https://energy.ec.europa.eu/news/new-energy-market-integrity-and-transparency-rules-2026-04-09_en",
+    title: "PJM/data center: l'AI diventa un problema di mercato elettrico",
+    copy: "La crescita dei data center sta forzando il dibattito su capacity market, rete e investimenti di lungo periodo.",
+    sources: "Reuters",
+    url: "https://www.investing.com/news/commodities-news/us-power-grid-operator-pjm-is-considering-market-overhaul-4665445",
   },
 ];
 
