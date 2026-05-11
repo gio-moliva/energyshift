@@ -52,7 +52,7 @@ const editorialPicks = [
   },
   {
     title: "Storage e solare possono tagliare il conto del gas UE",
-    copy: "Lo scenario SolarPower Europe/Rystad lega flessibilita, prezzi day-ahead e minori importazioni di gas.",
+    copy: "Lo scenario SolarPower Europe/Rystad lega flessibilità, prezzi day-ahead e minori importazioni di gas.",
     sources: "SolarPower Europe - Rystad - PV Tech",
     url: "https://www.pv-tech.org/solarpower-europes-ambitious-solar-scenario-operating-costs-european-solar-49/",
   },
